@@ -1,3 +1,4 @@
+<?php require_once('connexion.php');?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,14 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css">
-    <title>form</title>
+    <title>Document</title>
 </head>
 <body>
-    
-    <h1>Contact</h1>
-
-    <form action="process.php" method="post">
-
+    <form action="" method="post" enctype="multipart/form-data">
+        <h2>Modifier un élément</h2>
 
         <label for="name">Name</label>
         <input type="text" id="name" name="name">
@@ -51,9 +49,37 @@
         <br>
 
         <button name="save" >Send</button>
-        
+
+        <?php
+        if(isset($_POST['save'])){
+
+            $name = $_POST['name'];
+            $message = $_POST['message'];
+            $priority = $_POST['priority'];
+            $type = $_POST['type'];
+
+
+            $update = $_GET['id'];
+
+            $reqUp = "UPDATE message SET name='$name', body='$message', priority='$priority', type='$type' WHERE id='$update'";
+
+            $result = $conn->query($reqUp);
+
+            if($result)
+            {
+                echo "Modification Réussie";
+            }
+            else{
+                echo"Echec de modification des données";
+            }
+
+        }
+
+        ?>
+
+
     </form>
 
-    <button> <a class="btn btn-danger" href="view.php">Read</a> </button>
+
 </body>
 </html>
